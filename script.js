@@ -2,7 +2,8 @@ const imdb_button_selector = "#film-page-wrapper > div.col-17 > section.section.
 const panel_selector = "#film-page-wrapper > div.col-17 > section.section.col-10.col-main > p";
 const year_selector = "#featured-film-header > p > small > a";
 
-const base_url = "https://30nama.com/movies/";
+const base_30nama = "https://30nama.com/movies/";
+const base_digimoviez = "https://digimoviez.com/?s=";
 const movie_name_pattern = /(?<=^https:\/\/letterboxd.com\/film\/)(.*)(?=[\/])/;
 const imdb_id_pattern = /(?<=^http:\/\/www.imdb.com\/title\/tt)(.*)(?=[\/])/;
 const ends_with_year_pattern = /^(.+)[12][0-9]{3}$/;
@@ -22,25 +23,33 @@ async function main() {
     var imdb_id = imdb_link.match(imdb_id_pattern)[1];
 
     if (!movie_name.match(ends_with_year_pattern))
-        var final_url = `${base_url}${imdb_id}-${movie_name}-${movie_year}.html`;
+        var url_digimoviez = `${base_digimoviez}${movie_name.replace('-', '+')}+${movie_year}`;
     else
-        var final_url = `${base_url}${imdb_id}-${movie_name}.html`;
+        var url_digimoviez = `${base_digimoviez}${movie_name.replace('-', '+')}`;
 
-    await build_service(final_url);
+    var url_30nama = `${base_30nama}${imdb_id}.html`;
+
+    await build_service(url_30nama, url_digimoviez);
 
     console.log("30nama done!");
 }
 
-async function build_service(movie_url) {
+async function build_service(url_30nama, url_digimoviez) {
     while (!document.querySelector(panel_selector)) {
         await new Promise(r => setTimeout(r, 500));
     }
     var services_panel = document.querySelector(panel_selector);
     var atag = document.createElement('a');
-    atag.href = movie_url;
+    atag.href = url_30nama;
     atag.className = "micro-button track-event";
-    // atag.target = "_blank";
     var text = document.createTextNode("30Nama");
+    atag.appendChild(text);
+    services_panel.appendChild(atag);
+
+    var atag = document.createElement('a');
+    atag.href = url_digimoviez;
+    atag.className = "micro-button track-event";
+    var text = document.createTextNode("digimoviez");
     atag.appendChild(text);
     services_panel.appendChild(atag);
 }
