@@ -4,6 +4,8 @@ const year_selector = "#featured-film-header > p > small > a";
 
 const base_30nama = "https://30nama.com/movies/";
 const base_digimoviez = "https://digimoviez.com/?s=";
+const base_limetorrent = "https://www.limetorrents.info/search/movies/";
+
 const movie_name_pattern = /(?<=^https:\/\/letterboxd.com\/film\/)(.*)(?=[\/])/;
 const imdb_id_pattern = /(?<=^http:\/\/www.imdb.com\/title\/tt)(.*)(?=[\/])/;
 const ends_with_year_pattern = /^(.+)[12][0-9]{3}$/;
@@ -22,19 +24,23 @@ async function main() {
     var movie_year = year_field.textContent;
     var imdb_id = imdb_link.match(imdb_id_pattern)[1];
 
-    if (!movie_name.match(ends_with_year_pattern))
+    if (!movie_name.match(ends_with_year_pattern)) {
         var url_digimoviez = `${base_digimoviez}${movie_name.replace('-', '+')}+${movie_year}`;
-    else
+        var url_limetorrent = `${base_limetorrent}${movie_name}-${movie_year}/seeds/1/`;
+    }
+    else {
         var url_digimoviez = `${base_digimoviez}${movie_name.replace('-', '+')}`;
+        var url_limetorrent = `${base_limetorrent}${movie_name}/seeds/1/`;
+    }
 
     var url_30nama = `${base_30nama}${imdb_id}.html`;
 
-    await build_service(url_30nama, url_digimoviez);
+    await build_service(url_30nama, url_digimoviez, url_limetorrent);
 
     console.log("30nama done!");
 }
 
-async function build_service(url_30nama, url_digimoviez) {
+async function build_service(url_30nama, url_digimoviez, url_limetorrent) {
     while (!document.querySelector(panel_selector)) {
         await new Promise(r => setTimeout(r, 500));
     }
@@ -50,6 +56,13 @@ async function build_service(url_30nama, url_digimoviez) {
     atag.href = url_digimoviez;
     atag.className = "micro-button track-event";
     var text = document.createTextNode("digimoviez");
+    atag.appendChild(text);
+    services_panel.appendChild(atag);
+
+    var atag = document.createElement('a');
+    atag.href = url_limetorrent;
+    atag.className = "micro-button track-event";
+    var text = document.createTextNode("limetorrent");
     atag.appendChild(text);
     services_panel.appendChild(atag);
 }
