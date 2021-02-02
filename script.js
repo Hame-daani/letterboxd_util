@@ -25,12 +25,13 @@ async function main() {
     var movie_year = year_field.textContent;
     var imdb_id = imdb_link.match(imdb_id_pattern)[1];
 
+    //todo maybe better digimoviez?
     if (!movie_name.match(ends_with_year_pattern)) {
-        var url_digimoviez = `${base_digimoviez}${movie_name.replace('-', '+')}+${movie_year}`;
+        var url_digimoviez = `${base_digimoviez}${movie_name.replace(/-/g, '+')}+${movie_year}`;
         var url_limetorrent = `${base_limetorrent}${movie_name}-${movie_year}/seeds/1/`;
     }
     else {
-        var url_digimoviez = `${base_digimoviez}${movie_name.replace('-', '+')}`;
+        var url_digimoviez = `${base_digimoviez}${movie_name.replace(/-/g, '+')}`;
         var url_limetorrent = `${base_limetorrent}${movie_name}/seeds/1/`;
     }
 
