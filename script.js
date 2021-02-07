@@ -6,6 +6,7 @@ const base_30nama = "https://30nama.com/movies/";
 const base_digimoviez = "https://digimoviez.com/?s=";
 const base_limetorrent = "https://www.limetorrents.info/search/movies/";
 const base_torrentgalaxy = "https://torrentgalaxy.to/torrents.php?search=";
+const base_1337x = "https://1337x.to/search/";
 
 const movie_name_pattern = /(?<=^https:\/\/letterboxd.com\/film\/)(.*)(?=[\/])/;
 const imdb_id_pattern = /(?<=^http:\/\/www.imdb.com\/title\/tt)(.*)(?=[\/])/;
@@ -28,26 +29,29 @@ async function main() {
     //todo maybe better digimoviez?
     if (!movie_name.match(ends_with_year_pattern)) {
         var url_digimoviez = `${base_digimoviez}${movie_name.replace(/-/g, '+')}+${movie_year}`;
+        var url_1337x = `${base_1337x}${movie_name.replace(/-/g, '+')}+${movie_year}/1/`;
         var url_limetorrent = `${base_limetorrent}${movie_name}-${movie_year}/seeds/1/`;
     }
     else {
         var url_digimoviez = `${base_digimoviez}${movie_name.replace(/-/g, '+')}`;
+        var url_1337x = `${base_1337x}${movie_name.replace(/-/g, '+')}/1/`;
         var url_limetorrent = `${base_limetorrent}${movie_name}/seeds/1/`;
     }
 
     var url_30nama = `${base_30nama}${imdb_id}.html`;
     var url_torrentgalaxy = `${base_torrentgalaxy}tt${imdb_id}&sort=seeders&order=desc`;
 
-    await build_service(url_30nama, url_digimoviez, url_limetorrent, url_torrentgalaxy);
+    await build_service(url_30nama, url_digimoviez, url_limetorrent, url_torrentgalaxy, url_1337x);
 
     console.log("30nama done!");
 }
 
-async function build_service(url_30nama, url_digimoviez, url_limetorrent, url_torrentgalaxy) {
+async function build_service(url_30nama, url_digimoviez, url_limetorrent, url_torrentgalaxy, url_1337x) {
     while (!document.querySelector(panel_selector)) {
         await new Promise(r => setTimeout(r, 500));
     }
     var services_panel = document.querySelector(panel_selector);
+
     var atag = document.createElement('a');
     atag.href = url_30nama;
     atag.className = "micro-button track-event";
@@ -73,6 +77,13 @@ async function build_service(url_30nama, url_digimoviez, url_limetorrent, url_to
     atag.href = url_torrentgalaxy;
     atag.className = "micro-button track-event";
     var text = document.createTextNode("torrentgalaxy");
+    atag.appendChild(text);
+    services_panel.appendChild(atag);
+
+    var atag = document.createElement('a');
+    atag.href = url_1337x;
+    atag.className = "micro-button track-event";
+    var text = document.createTextNode("1337x");
     atag.appendChild(text);
     services_panel.appendChild(atag);
 }
