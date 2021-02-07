@@ -1,0 +1,7 @@
+.watch-panel .services>.service:nth-child(n+5) {
+    display: block !important;
+}
+
+span.brand>img {
+    max-height: 100%;
+}

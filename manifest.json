@@ -11,6 +11,9 @@
             "js": [
                 "script.js"
             ],
+            "css": [
+                "script.css"
+            ],
             "run_at": "document_end"
         }
     ],
