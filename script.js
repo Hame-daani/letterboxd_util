@@ -1,6 +1,7 @@
 const imdb_button_selector = "#film-page-wrapper > div.col-17 > section.section.col-10.col-main > p > a:nth-child(1)";
 const panel_selector = "#film-page-wrapper > div.col-17 > section.section.col-10.col-main > p";
 const year_selector = "#featured-film-header > p > small > a";
+const services_panel_selector = "#watch > section";
 
 const base_30nama = "https://30nama.com/movies/";
 const base_digimoviez = "https://digimoviez.com/?s=";
@@ -47,44 +48,49 @@ async function main() {
 }
 
 async function build_service(url_30nama, url_digimoviez, url_limetorrent, url_torrentgalaxy, url_1337x) {
-    while (!document.querySelector(panel_selector)) {
+    while (!document.querySelector(services_panel_selector)) {
         await new Promise(r => setTimeout(r, 500));
     }
-    var services_panel = document.querySelector(panel_selector);
+    console.log("start building service.");
+
+    var services_panel = document.querySelector(services_panel_selector);
+
+    while (services_panel.firstChild) {
+        services_panel.removeChild(services_panel.lastChild);
+    }
+
+    add_service(url_30nama, "30Nama", services_panel);
+    add_service(url_digimoviez, "Digimoviez", services_panel);
+    add_service(url_limetorrent, "Lime Torrent", services_panel);
+    add_service(url_torrentgalaxy, "Torrent Galaxy", services_panel);
+    add_service(url_1337x, "1337x Torrent", services_panel);
+
+}
+
+function add_service(service_url, service_name, services_panel) {
+    console.log(`add ${service_name} service.`);
+
+    var ptag = document.createElement('p');
+    ptag.className = "service";
+    ptag.id = `${service_name} panel`
 
     var atag = document.createElement('a');
-    atag.href = url_30nama;
-    atag.className = "micro-button track-event";
-    var text = document.createTextNode("30Nama");
-    atag.appendChild(text);
-    services_panel.appendChild(atag);
+    atag.href = service_url;
+    atag.className = "label track-event tooltip";
 
-    var atag = document.createElement('a');
-    atag.href = url_digimoviez;
-    atag.className = "micro-button track-event";
-    var text = document.createTextNode("digimoviez");
-    atag.appendChild(text);
-    services_panel.appendChild(atag);
+    var titlespan = document.createElement('span');
+    titlespan.className = "title";
 
-    var atag = document.createElement('a');
-    atag.href = url_limetorrent;
-    atag.className = "micro-button track-event";
-    var text = document.createTextNode("limetorrent");
-    atag.appendChild(text);
-    services_panel.appendChild(atag);
+    var namespan = document.createElement('span');
+    namespan.className = "name";
 
-    var atag = document.createElement('a');
-    atag.href = url_torrentgalaxy;
-    atag.className = "micro-button track-event";
-    var text = document.createTextNode("torrentgalaxy");
-    atag.appendChild(text);
-    services_panel.appendChild(atag);
+    var text = document.createTextNode(service_name);
 
-    var atag = document.createElement('a');
-    atag.href = url_1337x;
-    atag.className = "micro-button track-event";
-    var text = document.createTextNode("1337x");
-    atag.appendChild(text);
-    services_panel.appendChild(atag);
+    namespan.appendChild(text);
+    titlespan.appendChild(namespan);
+    atag.appendChild(titlespan);
+    ptag.appendChild(atag);
+
+    services_panel.appendChild(ptag);
 }
 
