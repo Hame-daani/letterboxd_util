@@ -9,6 +9,12 @@ const base_limetorrent = "https://www.limetorrents.info/search/movies/";
 const base_torrentgalaxy = "https://torrentgalaxy.to/torrents.php?search=";
 const base_1337x = "https://1337x.to/search/";
 
+const icon_30nama = "https://30nama.com/wp-content/themes/wdmovie/assets/images/favicon.png";
+const icon_digimoviez = "https://digimoviez.com/wp-content/uploads/2020/12/favicon.png";
+const icon_limetorrent = "https://www.limetorrents.info/favicon.ico";
+const icon_torrentgalaxy = "https://torrentgalaxy.to/common/favicon/favicon.ico";
+const icon_1337x = "https://1337x.to/favicon.ico";
+
 const movie_name_pattern = /(?<=^https:\/\/letterboxd.com\/film\/)(.*)(?=[\/])/;
 const imdb_id_pattern = /(?<=^http:\/\/www.imdb.com\/title\/tt)(.*)(?=[\/])/;
 const ends_with_year_pattern = /^(.+)[12][0-9]{3}$/;
@@ -59,15 +65,15 @@ async function build_service(url_30nama, url_digimoviez, url_limetorrent, url_to
         services_panel.removeChild(services_panel.lastChild);
     }
 
-    add_service(url_30nama, "30Nama", services_panel);
-    add_service(url_digimoviez, "Digimoviez", services_panel);
-    add_service(url_limetorrent, "Lime Torrent", services_panel);
-    add_service(url_torrentgalaxy, "Torrent Galaxy", services_panel);
-    add_service(url_1337x, "1337x Torrent", services_panel);
+    add_service(url_30nama, "30Nama", icon_30nama, services_panel);
+    add_service(url_digimoviez, "Digimoviez", icon_digimoviez, services_panel);
+    add_service(url_limetorrent, "Lime Torrent", icon_limetorrent, services_panel);
+    add_service(url_torrentgalaxy, "Torrent Galaxy", icon_torrentgalaxy, services_panel);
+    add_service(url_1337x, "1337x Torrent", icon_1337x, services_panel);
 
 }
 
-function add_service(service_url, service_name, services_panel) {
+function add_service(service_url, service_name, icon_url, services_panel) {
     console.log(`add ${service_name} service.`);
 
     var ptag = document.createElement('p');
@@ -77,6 +83,12 @@ function add_service(service_url, service_name, services_panel) {
     var atag = document.createElement('a');
     atag.href = service_url;
     atag.className = "label track-event tooltip";
+
+    var brandspan = document.createElement('span');
+    brandspan.className = "brand";
+
+    var img = document.createElement('img');
+    img.src = icon_url;
 
     var titlespan = document.createElement('span');
     titlespan.className = "title";
@@ -88,6 +100,8 @@ function add_service(service_url, service_name, services_panel) {
 
     namespan.appendChild(text);
     titlespan.appendChild(namespan);
+    brandspan.appendChild(img);
+    atag.appendChild(brandspan);
     atag.appendChild(titlespan);
     ptag.appendChild(atag);
 
