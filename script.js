@@ -1,5 +1,4 @@
 const imdb_button_selector = "#film-page-wrapper > div.col-17 > section.section.col-10.col-main > p > a:nth-child(1)";
-const panel_selector = "#film-page-wrapper > div.col-17 > section.section.col-10.col-main > p";
 const year_selector = "#featured-film-header > p > small > a";
 const services_panel_selector = "#watch > section";
 
