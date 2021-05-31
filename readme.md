@@ -1,18 +1,22 @@
 # Letterboxd Util
+
 it's a browser extension for both **chrome** and **firefox**.  
-it will assist you with downloading movies directly from the movie page on letterboxd.  
+it will assist you with downloading movies directly from the movie page on letterboxd.
+
 > more sites will be support soon...
 
-
 ## Supported Sites
+
 - 30Nama
 - Digimoviez
 - Lime Torrent
 - Torrent Galaxy
 - 1337x Torrent
-
+- Rarbg
+- Yify
 
 ## Screenshots
+
 this is how movie page will look like after installing this extension.  
 ![full shot](full_shot.png "full shot")
 

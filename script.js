@@ -7,12 +7,18 @@ const base_digimoviez = "https://digimoviez.com/?s=";
 const base_limetorrent = "https://www.limetorrents.info/search/movies/";
 const base_torrentgalaxy = "https://torrentgalaxy.to/torrents.php?search=";
 const base_1337x = "https://1337x.to/search/";
+const base_rarbg = "https://rarbgtor.org/torrents.php?category=movies&search=";
+const base_yify = "https://yts.mx/browse-movies/";
+
 
 const icon_30nama = "https://30nama.com/wp-content/themes/wdmovie/assets/images/favicon.png";
 const icon_digimoviez = "https://digimoviez.com/wp-content/uploads/2020/12/favicon.png";
 const icon_limetorrent = "https://www.limetorrents.info/favicon.ico";
 const icon_torrentgalaxy = "https://torrentgalaxy.to/common/favicon/favicon.ico";
 const icon_1337x = "https://1337x.to/favicon.ico";
+const icon_rarbg = "https://rarbgtor.org/favicon.ico";
+const icon_yify = "https://yts.mx/assets/images/website/favicon.ico";
+
 
 const movie_name_pattern = /(?<=^https:\/\/letterboxd.com\/film\/)(.*)(?=[\/])/;
 const imdb_id_pattern = /(?<=^http:\/\/www.imdb.com\/title\/tt)(.*)(?=[\/])/;
@@ -46,13 +52,15 @@ async function main() {
 
     var url_30nama = `${base_30nama}${imdb_id}.html`;
     var url_torrentgalaxy = `${base_torrentgalaxy}tt${imdb_id}&sort=seeders&order=desc`;
+    var url_rarbg = `${base_rarbg}${imdb_id}`;
+    var url_yify = `${base_yify}${movie_name}`;
 
-    await build_service(url_30nama, url_digimoviez, url_limetorrent, url_torrentgalaxy, url_1337x);
+    await build_service(url_30nama, url_digimoviez, url_limetorrent, url_torrentgalaxy, url_1337x, url_rarbg, url_yify);
 
     console.log("30nama done!");
 }
 
-async function build_service(url_30nama, url_digimoviez, url_limetorrent, url_torrentgalaxy, url_1337x) {
+async function build_service(url_30nama, url_digimoviez, url_limetorrent, url_torrentgalaxy, url_1337x, url_rarbg, url_yify) {
     while (!document.querySelector(services_panel_selector)) {
         await new Promise(r => setTimeout(r, 500));
     }
@@ -69,6 +77,8 @@ async function build_service(url_30nama, url_digimoviez, url_limetorrent, url_to
     add_service(url_limetorrent, "Lime Torrent", icon_limetorrent, services_panel);
     add_service(url_torrentgalaxy, "Torrent Galaxy", icon_torrentgalaxy, services_panel);
     add_service(url_1337x, "1337x Torrent", icon_1337x, services_panel);
+    add_service(url_rarbg, "Rarbg", icon_rarbg, services_panel);
+    add_service(url_yify, "Yify", icon_yify, services_panel);
 
 }
 
