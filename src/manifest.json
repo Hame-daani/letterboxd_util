@@ -9,10 +9,10 @@
                 "https://letterboxd.com/film/*"
             ],
             "js": [
-                "script.js"
+                "js/script.js"
             ],
             "css": [
-                "script.css"
+                "css/script.css"
             ],
             "run_at": "document_end"
         }
@@ -21,12 +21,12 @@
         "activeTab"
     ],
     "browser_action": {
-        "default_popup": "popup.html"
+        "default_popup": "html/popup.html"
     },
     "icons": {
-        "16": "icon.png",
-        "32": "icon.png",
-        "48": "icon.png",
-        "128": "icon.png"
+        "16": "icons/icon.png",
+        "32": "icons/icon.png",
+        "48": "icons/icon.png",
+        "128": "icons/icon.png"
     }
 }
